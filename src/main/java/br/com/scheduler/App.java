@@ -7,15 +7,25 @@ import java.util.Timer;
 
 public class App extends HttpServlet {
 
+    static Timer time;
+    static ScheduleTask st;
+
     @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
 
-        Timer time = new Timer();
-        ScheduleTask st = new ScheduleTask();
+        time = new Timer();
+        st = new ScheduleTask();
         time.schedule(st, 0, 10000);
 
       }
+
+    @Override
+    public void destroy() {
+        super.destroy();
+        time.cancel();
+        st.cancel();
+    }
 }
 
 
